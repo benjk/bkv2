@@ -1,0 +1,19 @@
+{
+  "name": "bksitev",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "@splidejs/splide": "^4.1.4",
+    "gsap": "^3.12.5",
+    "lite-youtube-embed": "^0.3.3"
+  }
+}

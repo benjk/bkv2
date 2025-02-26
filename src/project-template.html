@@ -1,0 +1,31 @@
+<label class="card" for="item-{{id}}" id="project-{{id}}">
+  <div class="splide-container">
+    <section id="main-carousel{{id}}" class="splide main-carousel" aria-label="{{title}}">
+      {{videoMobile}}
+      <div class="splide__track">
+        <ul class="splide__list">
+          {{mainImages}}
+        </ul>
+      </div>
+    </section>
+    <section
+    id="thumbnail-carousel{{id}}"
+    class="splide thumbnail-carousel"
+    aria-label="{{title}} miniatures"
+    >
+    <div class="splide__track">
+      <ul class="splide__list">
+        {{thumbnails}}
+      </ul>
+    </div>
+  </section>
+</div>
+<div class="project-legend-container">
+  <h2>{{title}}</h2>
+  <p>{{description}}</p>
+  <ul>
+    {{infosProject}}
+  </ul>
+  <a class="button contact-link"  data-duration="0.5">Envie d'un projet similaire ?</a>
+</div>
+</label>
