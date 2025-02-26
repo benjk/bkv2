@@ -4,34 +4,34 @@
         "title": "Siane",
         "description": "Création d'une application Android pour tablette Samsung Galaxy A7, spécialement conçue pour le <a target='blank' href='https://www.salonsiane.com/place-de-lindustrie/'>salon SIANE Industries</a>. Ce projet combine <strong>divertissement et pédagogie</strong> et propose une série de mini-jeux interactifs autour de thèmes industriels français tels que l’énergie, le bois, le plastique...<br><br>L'application accompagne un jeu de piste physique et enrichit l'expérience des visiteurs à travers des mini-jeux conçus sur mesure, comme des <strong>puzzles</strong>, <strong>labyrinthes</strong>, <strong>drag & drop</strong> et des activités de <strong>sélection</strong>. Ces jeux permettent aux utilisateurs de découvrir chaque filière de manière ludique, en les invitant à explorer et comprendre les enjeux de l'industrie française.",
         "images": [
-            "assets/img/projet1_thumb3.webp",
-            "assets/img/projet1_thumb6.webp",
-            "assets/img/projet1_thumb7.webp",
-            "assets/img/projet1_thumb9.webp",
-            "assets/img/projet1_thumb10.webp"
+            "./img/projet1_thumb3.webp",
+            "./img/projet1_thumb6.webp",
+            "./img/projet1_thumb7.webp",
+            "./img/projet1_thumb9.webp",
+            "./img/projet1_thumb10.webp"
         ],
         "gifs": [
             {
-                "src": "assets/img/projet1_thumb2_gif.gif",
-                "thumb": "assets/img/projet1_thumb2.webp"
+                "src": "./img/projet1_thumb2_gif.gif",
+                "thumb": "./img/projet1_thumb2.webp"
             },
             {
-                "src": "assets/img/projet1_thumb4_gif.gif",
-                "thumb": "assets/img/projet1_thumb4.webp"
+                "src": "./img/projet1_thumb4_gif.gif",
+                "thumb": "./img/projet1_thumb4.webp"
             },
             {
-                "src": "assets/img/projet1_thumb8_gif.gif",
-                "thumb": "assets/img/projet1_thumb8.webp"
+                "src": "./img/projet1_thumb8_gif.gif",
+                "thumb": "./img/projet1_thumb8.webp"
             },
             {
-                "src": "assets/img/projet1_thumb5_gif.gif",
-                "thumb": "assets/img/projet1_thumb5.webp"
+                "src": "./img/projet1_thumb5_gif.gif",
+                "thumb": "./img/projet1_thumb5.webp"
             }
         ],
         "video": {
             "src": "WKHzvc703PE",
             "title": "Siane Démo",
-            "thumb": "assets/img/projet1_video_thumb.webp"
+            "thumb": "./img/projet1_video_thumb.webp"
         },
         "details": {
             "année": "2022",
@@ -44,12 +44,12 @@
         "title": "Wabi Sabi",
         "description": "Histoires Wabi Sabi est un site web conçu pour la diffusion d'histoires audios.<br><br> Mon rôle ? Mettre en place une <strong>solution d'abonnement</strong> qui garantit un accès exclusif aux abonnés et un player personnalisé pour une écoute immersive. J'ai également développé un <strong>plugin personnalisé</strong> permettant une gestion autonome du contenu via <strong>WordPress</strong>, facilitant la publication régulière d’histoires inédites.<br><br>N'hésitez pas à <a target='blank' href='https://histoireswabisabi.com/'>visiter le site</a> et demandez un <a class='contact-link' data-duration='0.5'>accès invité</a> pour tester la plateforme.",
         "images": [
-            "assets/img/projet2_thumb1.webp",
-            "assets/img/projet2_thumb2.webp"        ],
+            "./img/projet2_thumb1.webp",
+            "./img/projet2_thumb2.webp"        ],
             "gifs": [
                 {
-                    "src": "assets/img/projet2_thumb3_gif.gif",
-                    "thumb": "assets/img/projet2_thumb3.webp"
+                    "src": "./img/projet2_thumb3_gif.gif",
+                    "thumb": "./img/projet2_thumb3.webp"
                 }
             ],
             "details": {
@@ -63,11 +63,11 @@
             "title": "Oyogoo",
             "description": "Une application web <strong>optimisée pour le mobile</strong> proposant des podcasts ludiques qui accompagnent les enfants dans l'apprentissage de la natation.<br>J'ai développé un <strong>player personnalisé</strong> pour une expérience utilisateur sur mesure.<br><br> En tant que <strong>PWA (Progressive Web Application)</strong>, elle peut être installée et lancée en plein écran comme une application native et ainsi renforcer l'expérience immersive.<br><br>Visitez <a target='blank' href='https://www.oyogoo.com/'>oyogoo.com</a>",
             "images": [
-                "assets/img/projet4_thumb1.webp",
-                "assets/img/projet4_thumb2.webp",
-                "assets/img/projet4_thumb3.webp",
-                "assets/img/projet4_thumb5.webp",
-                "assets/img/projet4_thumb4.webp"
+                "./img/projet4_thumb1.webp",
+                "./img/projet4_thumb2.webp",
+                "./img/projet4_thumb3.webp",
+                "./img/projet4_thumb5.webp",
+                "./img/projet4_thumb4.webp"
             ],
             "details": {
                 "année": "2023",
@@ -80,15 +80,15 @@
             "title": "Chapzy",
             "description": "Une application de divertissement pour jouer au Time's up. Ce support interactif permet de gérer les parties facilement : <strong>gestion des joueurs et des équipes</strong>, <strong>minuterie</strong>, <strong>calcul des scores</strong>.<br>J'ai ajouté des fonctionnalités de personnalisation avancée et une collection de mots personnalisables pour enrichir l'expérience de chaque joueur.<br><br>Le déploiement sur le <strong>Play Store Google</strong> m'a permis de pratiquer des stratégies de <strong>référencement Android</strong> (ASO) et d'optimiser la <strong>vente de produits digitaux.</strong><a target='blank' href='https://play.google.com/store/apps/details?id=chapzy.projet.chapzygame&hl=fr'></a>",
             "images": [
-                "assets/img/projet3_thumb1.webp",
-                "assets/img/projet3_thumb2.webp",
-                "assets/img/projet3_thumb3.webp",
-                "assets/img/projet3_thumb4.webp",
-                "assets/img/projet3_thumb5.webp",
-                "assets/img/projet3_thumb6.webp",
-                "assets/img/projet3_thumb7.webp",
-                "assets/img/projet3_thumb8.webp",
-                "assets/img/projet3_thumb9.webp"
+                "./img/projet3_thumb1.webp",
+                "./img/projet3_thumb2.webp",
+                "./img/projet3_thumb3.webp",
+                "./img/projet3_thumb4.webp",
+                "./img/projet3_thumb5.webp",
+                "./img/projet3_thumb6.webp",
+                "./img/projet3_thumb7.webp",
+                "./img/projet3_thumb8.webp",
+                "./img/projet3_thumb9.webp"
             ],
             "details": {
                 "année": "2019",

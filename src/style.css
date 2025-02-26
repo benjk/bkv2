@@ -1249,11 +1249,11 @@ input[type=radio] {
 }
 
 .splide__arrow {
-  opacity: 1;
+  opacity: 1 !important;
   height: var(--splide-arrow-size) !important;
   width: var(--splide-arrow-size) !important;
   border: 2px solid white !important;
-  box-shadow: var(--basic-shadow);
+  box-shadow: var(--basic-shadow) !important;
   transition: box-shadow 0.3s ease, transform 0.3s ease; 
 }
 
