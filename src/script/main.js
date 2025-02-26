@@ -525,7 +525,6 @@ document.addEventListener("DOMContentLoaded", function () {
           (navigator.userAgent.indexOf("Safari") > -1 &&
             navigator.userAgent.indexOf("Chrome") === -1)
         ) {
-          console.log("Firefox or Safari detected");
           const items = cont.querySelectorAll("li");
           items.forEach((item) => {
             const img = item.querySelector("img");
@@ -650,7 +649,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           currentSlide = 1;
         }
-        activeItem = document.getElementById(`item-${currentSlide}`);
+        let activeItem = document.getElementById(`item-${currentSlide}`);
         console.log(activeItem);
         
         activeItem.checked = true;
@@ -665,7 +664,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           currentSlide = totalSlides;
         }
-        activeItem = document.getElementById(`item-${currentSlide}`);
+        let activeItem = document.getElementById(`item-${currentSlide}`);
         activeItem.checked = true;
         activateCardForItem(activeItem);
       };
