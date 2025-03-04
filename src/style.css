@@ -1118,21 +1118,27 @@ textarea.floating-input {
   height: 12%; /* Utilisez une valeur fixe pour le carrousel des miniatures */
 }
 
-#project-5 .thumbnail-carousel {
-  height: 15%; /* Utilisez une valeur fixe pour le carrousel des miniatures */
-}
-
-#project-1 .main-carousel {
+#project-1 .main-carousel, #project-5 .main-carousel {
   flex-direction: column;
+  align-items: center;
   gap: var(--margin-s);
+  justify-content: space-evenly;
+  height: 100%;
 }
 
-#project-1 .main-carousel .splide__track {
+#project-1 .main-carousel .splide__track, 
+#project-5 .main-carousel .splide__track {
   height: auto;
 }
 
 #project-1 .main-carousel lite-youtube {
   flex: 1;
+}
+
+#project-5 .main-carousel .main-gif {
+  width: 115%;
+  height: auto;
+  object-fit: contain;
 }
 
 .project-legend-container {
@@ -1684,8 +1690,8 @@ input[type="radio"] {
   }
 
   #project-5 .thumbnail-carousel {
-    max-height: 10%;
-    height: 10%;
+    max-height: 13%;
+    height: 13%;
   }
 
   .splide__slide img {

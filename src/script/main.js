@@ -58,25 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!isPhone()) {
     phoneLink.style.setProperty("pointer-events", "none");
   }
- 
-
-  // function waitForAllImages() {
-  //   const images = Array.from(document.querySelectorAll("img"));
-
-  //   return Promise.all(
-  //     images.map((img) => {
-  //       return new Promise((resolve, reject) => {
-  //         if (img.complete) {
-  //           resolve();
-  //         } else {
-  //           img.onload = () => resolve();
-  //           img.onerror = () =>
-  //             reject(new Error(`Image failed to load: ${img.src}`));
-  //         }
-  //       });
-  //     })
-  //   );
-  // }
 
   // INIT FUNCTIONS
   async function initProjects() {
@@ -156,38 +137,61 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     let thumbHTML = mainImagesHTML;
+    let videmoMobile = "";
 
     if (project.gifs) {
-      if (project.id == 1 || project.id == 5) {
+      // Si cest sur mobile et spaceQuizz: Gif + images
+      if (isSmallScreen() && project.id == 5) {
+        
         project.gifs.forEach((gif) => {
-          thumbHTML =
+          videmoMobile = `<img class='main-gif' src='${gif.src}' alt='SpaceQuizz gif'>`;
+          thumbHTML = thumbHTML +
             `
                                 <li class="splide__slide">
                                     <img src="${gif.thumb}" alt="">
-                                </li>` + thumbHTML;
+                                </li>`;
 
-          mainImagesHTML =
+          mainImagesHTML = mainImagesHTML +
             `
                                 <li class="splide__slide">
-                                    <img src="${gif.src}" alt="">
-                                </li>` + mainImagesHTML;
+                                    <img src="${gif.thumb}" alt="">
+                                </li>`;
+
         });
+
       } else {
-        project.gifs.forEach((gif) => {
-          thumbHTML += `
-                                <li class="splide__slide">
-                                    <img src="${gif.thumb}" alt="">
-                                </li>`;
-
-          mainImagesHTML += `
-                                <li class="splide__slide">
-                                    <img src="${gif.src}" alt="">
-                                </li>`;
-        });
+        console.log(isSmallScreen());
+        
+        if (project.id == 1 || project.id == 5) {
+          project.gifs.forEach((gif) => {
+            thumbHTML =
+              `
+                                  <li class="splide__slide">
+                                      <img src="${gif.thumb}" alt="">
+                                  </li>` + thumbHTML;
+  
+            mainImagesHTML =
+              `
+                                  <li class="splide__slide">
+                                      <img src="${gif.src}" alt="">
+                                  </li>` + mainImagesHTML;
+          });
+        } else {
+          project.gifs.forEach((gif) => {
+            thumbHTML += `
+                                  <li class="splide__slide">
+                                      <img src="${gif.thumb}" alt="">
+                                  </li>`;
+  
+            mainImagesHTML += `
+                                  <li class="splide__slide">
+                                      <img src="${gif.src}" alt="">
+                                  </li>`;
+          });
+        }
       }
     }
 
-    let videmoMobile = "";
     if (project.video) {
       let liteYtElt = `<lite-youtube videoid="${project.video.src}" title="${project.video.title}" playlabel="${project.video.title}" js-api ></lite-youtube>`;
       if (!isSmallScreen()) {
@@ -253,6 +257,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Création du HTML pour chaque projet
       const cardHTML = createProjectCardHTML(project, images);
+      console.log(cardHTML);
+      
       projectsContainer.insertAdjacentHTML("beforeend", cardHTML);
     });
 
