@@ -94,5 +94,19 @@
                 "année": "2019",
                 "plateforme": "Android"
             }
+        },
+        {
+            "id": 5,
+            "title": "Space Quiz",
+            "description": "Un quiz développé sur-mesure pour être intégré à une salle d'<strong>escape-game</strong>. L'application est personnalisée sur le thème de l'espace, en utilisant les couleurs et polices déjà en place.",
+            "images": [
+                "./img/projet5_thumb1.png",
+                "./img/projet5_thumb2.JPG"               
+            ],
+            "details": {
+                "année": "2025",
+                "client": "Eludice",
+                "plateforme": "Windows / Web"
+            }
         }
     ]

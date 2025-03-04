@@ -439,7 +439,7 @@ document.addEventListener("DOMContentLoaded", function () {
           case "project-1":
             if (activeCard && activeCard.id == "project-2") {
               hoveredArrow = carouselArrows[0];
-            } else if (activeCard && activeCard.id == "project-4") {
+            } else if (activeCard && activeCard.id == "project-5") {
               hoveredArrow = carouselArrows[1];
             }
             break;
@@ -458,9 +458,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             break;
           case "project-4":
-            if (activeCard && activeCard.id == "project-1") {
+            if (activeCard && activeCard.id == "project-5") {
               hoveredArrow = carouselArrows[0];
             } else if (activeCard && activeCard.id == "project-3") {
+              hoveredArrow = carouselArrows[1];
+            }
+            break;
+          case "project-5":
+            if (activeCard && activeCard.id == "project-1") {
+              hoveredArrow = carouselArrows[0];
+            } else if (activeCard && activeCard.id == "project-4") {
               hoveredArrow = carouselArrows[1];
             }
             break;
@@ -479,7 +486,7 @@ document.addEventListener("DOMContentLoaded", function () {
             case "project-1":
               if (activeCard.id == "project-2") {
                 carouselArrows[0].classList.add("hovered");
-              } else if (activeCard.id == "project-4") {
+              } else if (activeCard.id == "project-5") {
                 carouselArrows[1].classList.add("hovered");
               }
           }
@@ -603,7 +610,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let startY = 0;
     let currentSlide = 1;
 
-    const totalSlides = 4;
+    const totalSlides = 5;
 
     const handleClickProjects = (e) => {
       const cardRect = activeCard.getBoundingClientRect();
