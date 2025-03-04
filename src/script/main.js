@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const clientSlideTrack = document.querySelector(".client-slide-track");
   const infoMsgProjects = document.querySelector("#third-section .info-msg");
 
+  const template = projectTemplate;
+
   let mainCarousels;
   let thumbCarouselImgContainer;
   let cards;
@@ -43,37 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const bgDiv = document.querySelector(".intro-bg");
   const img = document.getElementById("bg-image");
 
-  function setBackgroundImage() {
-    bgDiv.style.backgroundImage = `url('${img.src}')`;
-    img.remove();
-  }
-
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            if (img.complete) {
-              setBackgroundImage();
-            } else {
-              img.onload = setBackgroundImage;
-            }
-            observer.unobserve(bgDiv);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(bgDiv);
-  } else {
-    // Fallback pour les navigateurs qui ne supportent pas IntersectionObserver
-    if (img.complete) {
-      setBackgroundImage();
-    } else {
-      img.onload = setBackgroundImage;
-    }
-  }
+  initProjects()
+  initMainBackground();
 
   // Versionning
   const spanVersionning = document.querySelector("span#versionning");
@@ -85,27 +58,103 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!isPhone()) {
     phoneLink.style.setProperty("pointer-events", "none");
   }
+ 
 
-  const template = projectTemplate;
-  projectsData.forEach((project) => {
-    const images = [...project.images];
-    // Sur mobile on vire les logos ils genent l'affichage et n'apportent rien
-    if (isSmallScreen()) {
-      if (project.id == 3 || project.id == 4) {
-        images.shift();
-      } else if (project.id == 2) {
-        // Sur mobile on affiche en prio la version mobile
-        const firstImage = images.shift();
-        images.push(firstImage);
+  // function waitForAllImages() {
+  //   const images = Array.from(document.querySelectorAll("img"));
+
+  //   return Promise.all(
+  //     images.map((img) => {
+  //       return new Promise((resolve, reject) => {
+  //         if (img.complete) {
+  //           resolve();
+  //         } else {
+  //           img.onload = () => resolve();
+  //           img.onerror = () =>
+  //             reject(new Error(`Image failed to load: ${img.src}`));
+  //         }
+  //       });
+  //     })
+  //   );
+  // }
+
+  // INIT FUNCTIONS
+  async function initProjects() {
+    try {
+      // Initialisation précoce des éléments statiques
+      projectsLinks = document.querySelectorAll(".projects-link");
+      secondLinks = document.querySelectorAll(".second-link");
+      contactLinks = document.querySelectorAll(".contact-link");
+      initScrollAnimation();
+  
+      // Chargement des données de projets
+      const projectsData = await fetch("projects-data.json").then((response) =>
+        response.json()
+      );
+  
+      // Processus de chargement et de rendu des projets
+      await processProjects(projectsData);
+  
+      // Fonction pour attendre le rendu complet
+      function waitForDOMRender() {
+        return new Promise((resolve) => {
+          // Utiliser un micro-délai pour s'assurer du rendu complet
+          setTimeout(() => {
+            // Sélection à nouveau après le rendu
+            mainCarousels = document.querySelectorAll(".main-carousel");
+            thumbCarouselImgContainer = document.querySelectorAll(
+              ".thumbnail-carousel .splide__list"
+            );
+            cards = document.querySelectorAll(".card");
+            activeCard = document.querySelector(".card");
+  
+            // Vérification que les éléments sont bien présents
+            if (mainCarousels.length > 0 && thumbCarouselImgContainer.length > 0) {
+              resolve();
+            } else {
+              console.warn('Éléments du carousel non trouvés, nouvelle tentative');
+              resolve(waitForDOMRender());
+            }
+          }, 100); // Délai court mais suffisant
+        });
       }
+  
+      // Attendre le rendu complet
+      await waitForDOMRender();
+  
+      // Initialisation finale dans une frame d'animation
+      requestAnimationFrame(() => {
+        // Ajouter la classe active au premier projet
+        activeCard.classList.add("is-active");
+  
+        // Initialisation de Splide
+        initSplide(projectsData);
+  
+        // Écouteurs d'événements pour les radios
+        radiosCarousel.forEach((radio) => {
+          radio.addEventListener("change", (event) => {
+            activateCardForItem(radio);
+          });
+        });
+  
+        // Gestion de la taille d'écran
+        handleScreenSize();
+      });
+  
+    } catch (error) {
+      console.error("Erreur lors de l'initialisation", error);
     }
+  }
+
+  function createProjectCardHTML(project, images) {
+    initImageLoading(images);
 
     let mainImagesHTML = "";
     images.forEach((image) => {
       mainImagesHTML += `
-                      <li class="splide__slide">
-                          <img src="${image}" alt="">
-                      </li>`;
+                        <li class="splide__slide">
+                            <img src="${image}" alt="">
+                        </li>`;
     });
 
     let thumbHTML = mainImagesHTML;
@@ -115,27 +164,27 @@ document.addEventListener("DOMContentLoaded", function () {
         project.gifs.forEach((gif) => {
           thumbHTML =
             `
-                              <li class="splide__slide">
-                                  <img src="${gif.thumb}" alt="">
-                              </li>` + thumbHTML;
+                                <li class="splide__slide">
+                                    <img src="${gif.thumb}" alt="">
+                                </li>` + thumbHTML;
 
           mainImagesHTML =
             `
-                              <li class="splide__slide">
-                                  <img src="${gif.src}" alt="">
-                              </li>` + mainImagesHTML;
+                                <li class="splide__slide">
+                                    <img src="${gif.src}" alt="">
+                                </li>` + mainImagesHTML;
         });
       } else {
         project.gifs.forEach((gif) => {
           thumbHTML += `
-                              <li class="splide__slide">
-                                  <img src="${gif.thumb}" alt="">
-                              </li>`;
+                                <li class="splide__slide">
+                                    <img src="${gif.thumb}" alt="">
+                                </li>`;
 
           mainImagesHTML += `
-                              <li class="splide__slide">
-                                  <img src="${gif.src}" alt="">
-                              </li>`;
+                                <li class="splide__slide">
+                                    <img src="${gif.src}" alt="">
+                                </li>`;
         });
       }
     }
@@ -146,15 +195,15 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!isSmallScreen()) {
         thumbHTML =
           `
-                      <li class="splide__slide">
-                      <img src="${project.video.thumb}" alt="">
-                      </li>` + thumbHTML;
+                        <li class="splide__slide">
+                        <img src="${project.video.thumb}" alt="">
+                        </li>` + thumbHTML;
 
         mainImagesHTML =
           `
-                      <li class="splide__slide">
-                      ${liteYtElt}
-                      </li>` + mainImagesHTML;
+                        <li class="splide__slide">
+                        ${liteYtElt}
+                        </li>` + mainImagesHTML;
       } else {
         videmoMobile = liteYtElt;
       }
@@ -163,9 +212,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let infosProjectHTML = "";
     Object.entries(project.details).forEach(([key, value]) => {
       infosProjectHTML += `
-                      <li class="infos-project">
-                          <strong>${capitalize(key)}:</strong> ${value}
-                      </li>`;
+                        <li class="infos-project">
+                            <strong>${capitalize(key)}:</strong> ${value}
+                        </li>`;
     });
 
     let cardHTML = template
@@ -176,53 +225,147 @@ document.addEventListener("DOMContentLoaded", function () {
       .replace("{{mainImages}}", mainImagesHTML)
       .replace("{{videoMobile}}", videmoMobile)
       .replace(new RegExp("{{infosProject}}", "g"), infosProjectHTML);
-    projectsContainer.insertAdjacentHTML("beforeend", cardHTML);
-  });
-
-  projectsLinks = document.querySelectorAll(".projects-link");
-  secondLinks = document.querySelectorAll(".second-link");
-  contactLinks = document.querySelectorAll(".contact-link");
-  initScrollAnimation();
-  waitForAllImages().then(() => {
-    requestAnimationFrame(() => {
-      mainCarousels = document.querySelectorAll(".main-carousel");
-      thumbCarouselImgContainer = document.querySelectorAll(
-        ".thumbnail-carousel .splide__list"
-      );
-      cards = document.querySelectorAll(".card");
-      activeCard = document.querySelector(".card");
-      activeCard.classList.add("is-active");
-      initSplide(projectsData);
-
-      radiosCarousel.forEach((radio) => {
-        radio.addEventListener("change", (event) => {
-          activateCardForItem(radio);
-        });
-      });
-
-      handleScreenSize();
-    });
-  });
-
-  function waitForAllImages() {
-    const images = Array.from(document.querySelectorAll("img"));
-
-    return Promise.all(
-      images.map((img) => {
-        return new Promise((resolve, reject) => {
-          if (img.complete) {
-            resolve();
-          } else {
-            img.onload = () => resolve();
-            img.onerror = () =>
-              reject(new Error(`Image failed to load: ${img.src}`));
-          }
-        });
-      })
-    );
+    return cardHTML;
   }
 
-  // INIT FUNCTIONS
+  async function processProjects(projectsData) {
+    const imageLoadingPromises = [];
+
+    projectsData.forEach((project) => {
+      // Copie des images
+      const images = [...project.images];
+
+      // Sur mobile on vire les logos ils genent l'affichage et n'apportent rien
+      if (isSmallScreen()) {
+        if (project.id == 3 || project.id == 4) {
+          images.shift();
+        } else if (project.id == 2) {
+          // Sur mobile on affiche en prio la version mobile
+          const firstImage = images.shift();
+          images.push(firstImage);
+        }
+      }
+
+      // Préchargement des images du projet 1 (visible par défaut)
+      if (project.id === 1) {
+        // Préchargement prioritaire
+        const preloadPromise = initImageLoading(images, project.id);
+        imageLoadingPromises.push(preloadPromise);
+      }
+
+      // Création du HTML pour chaque projet
+      const cardHTML = createProjectCardHTML(project, images);
+      projectsContainer.insertAdjacentHTML("beforeend", cardHTML);
+    });
+
+    // Attendre le préchargement des images du projet 1
+    await Promise.all(imageLoadingPromises);
+  }
+
+  // Fonction pour importer dynamiquement les chemins d'images
+  function importImageDynamically(imagePath) {
+    return new URL(`./img/${imagePath}`, import.meta.url).href;
+  }
+
+  async function initImageLoading(images, projectId) {
+    // Préchargement des images pour un projet spécifique
+    const imageLoadPromises = images.map(
+      (imagePath) =>
+        new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () =>
+            resolve({
+              status: "loaded",
+              src: imagePath,
+              projectId: projectId,
+            });
+
+          img.onerror = () =>
+            resolve({
+              status: "error",
+              src: imagePath,
+              projectId: projectId,
+            });
+
+          // Utiliser l'import dynamique pour résoudre le chemin
+          img.src = importImageDynamically(imagePath);
+        })
+    );
+
+    try {
+      const imageResults = await Promise.allSettled(imageLoadPromises);
+
+      // Analyser les résultats
+      const loadedImages = imageResults.filter(
+        (result) =>
+          result.status === "fulfilled" && result.value.status === "loaded"
+      );
+
+      const failedImages = imageResults.filter(
+        (result) =>
+          result.status === "fulfilled" && result.value.status === "error"
+      );
+
+      // Logging détaillé
+      console.group(`Image Loading for Project ${projectId}`);
+      console.log(`Total images: ${images.length}`);
+      console.log(`Successfully loaded: ${loadedImages.length}`);
+
+      if (failedImages.length > 0) {
+        console.warn(`Failed to load: ${failedImages.length}`);
+        failedImages.forEach((fail) => {
+          console.warn(`Failed image: ${fail.value.src}`);
+        });
+      }
+      console.groupEnd();
+
+      return {
+        totalImages: images.length,
+        loadedImages: loadedImages.length,
+        failedImages: failedImages.length,
+        failedImageSources: failedImages.map((fail) => fail.value.src),
+      };
+    } catch (error) {
+      console.error("Erreur lors du chargement des images", error);
+      return null;
+    }
+  }
+
+  function initMainBackground() {
+    function setBackgroundImage() {
+      bgDiv.style.backgroundImage = `url('${img.src}')`;
+      img.remove();
+    }
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log("entry : " + entry);
+            if (entry.isIntersecting) {
+              if (img.complete) {
+                setBackgroundImage();
+              } else {
+                img.onload = setBackgroundImage;
+              }
+              observer.unobserve(bgDiv);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      observer.observe(bgDiv);
+    } else {
+      // Fallback pour les navigateurs qui ne supportent pas IntersectionObserver
+      if (img.complete) {
+        setBackgroundImage();
+      } else {
+        img.onload = setBackgroundImage;
+      }
+    }
+  }
+
   function initScrollAnimation() {
     contactLinks.forEach((link) => {
       let duration = parseFloat(link.getAttribute("data-duration")) || 0.5;
