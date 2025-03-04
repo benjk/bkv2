@@ -147,8 +147,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function createProjectCardHTML(project, images) {
-    initImageLoading(images);
-
     let mainImagesHTML = "";
     images.forEach((image) => {
       mainImagesHTML += `
@@ -305,19 +303,6 @@ document.addEventListener("DOMContentLoaded", function () {
         (result) =>
           result.status === "fulfilled" && result.value.status === "error"
       );
-
-      // Logging détaillé
-      console.group(`Image Loading for Project ${projectId}`);
-      console.log(`Total images: ${images.length}`);
-      console.log(`Successfully loaded: ${loadedImages.length}`);
-
-      if (failedImages.length > 0) {
-        console.warn(`Failed to load: ${failedImages.length}`);
-        failedImages.forEach((fail) => {
-          console.warn(`Failed image: ${fail.value.src}`);
-        });
-      }
-      console.groupEnd();
 
       return {
         totalImages: images.length,
