@@ -98,15 +98,23 @@
         {
             "id": 5,
             "title": "Space Quiz",
-            "description": "Un quiz développé sur-mesure pour être intégré à une salle d'<strong>escape-game</strong>. L'application est personnalisée sur le thème de l'espace, en utilisant les couleurs et polices déjà en place.",
+            "description": "Un quiz conçu <strong>sur-mesure</strong> pour une salle d'<strong>escape-game</strong>, developpé à l'aide de technologies Web modernes et destiné à fonctionner sur une tablette Windows.<br><br>L'application est designée sur le thème de l'espace, en utilisant les bonnes couleurs et polices, afin de s'intégrer parfaitement dans l'environnement en place.<br><br>Elle est capable de <strong>communiquer</strong> avec les autres éléments de la salle grâce au protocole <strong>TCP/IP</strong>.<br><br>🚀 <a target='blank' href='https://spacequizz.benkielinski.fr/'>Testez le quizz</a> !",
             "images": [
-                "./img/projet5_thumb1.png",
-                "./img/projet5_thumb2.JPG"               
+                "./img/projet5_thumb2.webp",
+                "./img/projet5_thumb3.webp",
+                "./img/projet5_thumb4.webp"
+            ],
+            "gifs": [
+                {
+                    "src": "./img/projet5_thumb1_gif.gif",
+                    "thumb": "./img/projet5_thumb1.webp"
+                }
             ],
             "details": {
                 "année": "2025",
                 "client": "Eludice",
-                "plateforme": "Windows / Web"
+                "plateforme": "Windows / Web",
+                "technos": "ReactJs, CSS, TCP/IP"
             }
         }
     ]

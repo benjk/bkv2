@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let thumbHTML = mainImagesHTML;
 
     if (project.gifs) {
-      if (project.id == 1) {
+      if (project.id == 1 || project.id == 5) {
         project.gifs.forEach((gif) => {
           thumbHTML =
             `

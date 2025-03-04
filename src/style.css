@@ -30,7 +30,8 @@
   --proj4-color1: #69ab2f;
   --proj4-color2: #ffd73e;
   --proj5-color1: #6e398e;
-  --proj5-color2: #e6e6e6;
+  --proj5-color1-light: #e2b8ff;
+  --proj5-color2: #fff;
 
   /****************** GLOBAL ******************/
   --shadow-header: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -1117,6 +1118,10 @@ textarea.floating-input {
   height: 12%; /* Utilisez une valeur fixe pour le carrousel des miniatures */
 }
 
+#project-5 .thumbnail-carousel {
+  height: 15%; /* Utilisez une valeur fixe pour le carrousel des miniatures */
+}
+
 #project-1 .main-carousel {
   flex-direction: column;
   gap: var(--margin-s);
@@ -1316,7 +1321,7 @@ input[type="radio"] {
 #item-5:checked ~ #project-3,
 #item-3:checked ~ #project-5,
 #item-3:checked ~ #project-1 {
-  opacity: 0.2;
+  opacity: 0;
   z-index: 0;
 }
 
@@ -1548,7 +1553,7 @@ input[type="radio"] {
 }
 
 #project-5 .project-legend-container {
-  color: var(--color3);
+  color: var(--proj5-color1-light);
 }
 
 .splide__arrow--prev {
@@ -1664,12 +1669,23 @@ input[type="radio"] {
     height: 50%;
   }
 
+  #project-5 .splide-container {
+    min-height: 45%;
+    height: 45%;
+    justify-content: flex-end;
+  }
+
   .main-carousel {
     height: auto;
   }
 
   .thumbnail-carousel {
     height: auto;
+  }
+
+  #project-5 .thumbnail-carousel {
+    max-height: 10%;
+    height: 10%;
   }
 
   .splide__slide img {
@@ -1751,7 +1767,7 @@ input[type="radio"] {
   #item-1:checked ~ #project-2,
   #item-2:checked ~ #project-3,
   #item-4:checked ~ #project-5,
-  #item-5:checked ~ #projet-1,
+  #item-5:checked ~ #project-1,
   #item-3:checked ~ #project-4 {
     transform: translate3d(11%, 0, 0) scale(0.95);
     filter: none;
