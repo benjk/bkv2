@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const bgDiv = document.querySelector(".intro-bg");
   const img = document.getElementById("bg-image");
 
-  initProjects()
+  initProjects();
   initMainBackground();
 
   // Versionning
@@ -62,20 +62,20 @@ document.addEventListener("DOMContentLoaded", function () {
   // INIT FUNCTIONS
   async function initProjects() {
     try {
+      // Chargement des données de projets
+      const projectsData = await fetch("projects-data.json").then((response) =>
+        response.json()
+      );
+
+      // Processus de chargement et de rendu des projets
+      await processProjects(projectsData);
+
       // Initialisation précoce des éléments statiques
       projectsLinks = document.querySelectorAll(".projects-link");
       secondLinks = document.querySelectorAll(".second-link");
       contactLinks = document.querySelectorAll(".contact-link");
       initScrollAnimation();
-  
-      // Chargement des données de projets
-      const projectsData = await fetch("projects-data.json").then((response) =>
-        response.json()
-      );
-  
-      // Processus de chargement et de rendu des projets
-      await processProjects(projectsData);
-  
+
       // Fonction pour attendre le rendu complet
       function waitForDOMRender() {
         return new Promise((resolve) => {
@@ -88,40 +88,44 @@ document.addEventListener("DOMContentLoaded", function () {
             );
             cards = document.querySelectorAll(".card");
             activeCard = document.querySelector(".card");
-  
+
             // Vérification que les éléments sont bien présents
-            if (mainCarousels.length > 0 && thumbCarouselImgContainer.length > 0) {
+            if (
+              mainCarousels.length > 0 &&
+              thumbCarouselImgContainer.length > 0
+            ) {
               resolve();
             } else {
-              console.warn('Éléments du carousel non trouvés, nouvelle tentative');
+              console.warn(
+                "Éléments du carousel non trouvés, nouvelle tentative"
+              );
               resolve(waitForDOMRender());
             }
           }, 100); // Délai court mais suffisant
         });
       }
-  
+
       // Attendre le rendu complet
       await waitForDOMRender();
-  
+
       // Initialisation finale dans une frame d'animation
       requestAnimationFrame(() => {
         // Ajouter la classe active au premier projet
         activeCard.classList.add("is-active");
-  
+
         // Initialisation de Splide
         initSplide(projectsData);
-  
+
         // Écouteurs d'événements pour les radios
         radiosCarousel.forEach((radio) => {
           radio.addEventListener("change", (event) => {
             activateCardForItem(radio);
           });
         });
-  
+
         // Gestion de la taille d'écran
         handleScreenSize();
       });
-  
     } catch (error) {
       console.error("Erreur lors de l'initialisation", error);
     }
@@ -142,26 +146,25 @@ document.addEventListener("DOMContentLoaded", function () {
     if (project.gifs) {
       // Si cest sur mobile et spaceQuizz: Gif + images
       if (isSmallScreen() && project.id == 5) {
-        
         project.gifs.forEach((gif) => {
           videmoMobile = `<img class='main-gif' src='${gif.src}' alt='SpaceQuizz gif'>`;
-          thumbHTML = thumbHTML +
+          thumbHTML =
+            thumbHTML +
             `
                                 <li class="splide__slide">
                                     <img src="${gif.thumb}" alt="">
                                 </li>`;
 
-          mainImagesHTML = mainImagesHTML +
+          mainImagesHTML =
+            mainImagesHTML +
             `
                                 <li class="splide__slide">
                                     <img src="${gif.thumb}" alt="">
                                 </li>`;
-
         });
-
       } else {
         console.log(isSmallScreen());
-        
+
         if (project.id == 1 || project.id == 5) {
           project.gifs.forEach((gif) => {
             thumbHTML =
@@ -169,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                   <li class="splide__slide">
                                       <img src="${gif.thumb}" alt="">
                                   </li>` + thumbHTML;
-  
+
             mainImagesHTML =
               `
                                   <li class="splide__slide">
@@ -182,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                   <li class="splide__slide">
                                       <img src="${gif.thumb}" alt="">
                                   </li>`;
-  
+
             mainImagesHTML += `
                                   <li class="splide__slide">
                                       <img src="${gif.src}" alt="">
@@ -258,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Création du HTML pour chaque projet
       const cardHTML = createProjectCardHTML(project, images);
       console.log(cardHTML);
-      
+
       projectsContainer.insertAdjacentHTML("beforeend", cardHTML);
     });
 
