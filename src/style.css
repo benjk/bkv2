@@ -455,13 +455,9 @@ a.button.disabled {
   height: 100vh;
   opacity: 0.5;
   object-fit: cover;
+  object-position: center center;
   pointer-events: none;
   z-index: 0;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  /* S'assurer que le navigateur garde cette ressource en mémoire */
-  will-change: background-image;
 }
 
 #first-section {

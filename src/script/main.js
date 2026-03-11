@@ -41,12 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let activeCard;
   let scrollingLinkAnimation = null;
 
-  // Gestion du background
-  const bgDiv = document.querySelector(".intro-bg");
-  const img = document.getElementById("bg-image");
-
   initProjects();
-  initMainBackground();
 
   // Versionning
   const spanVersionning = document.querySelector("span#versionning");
@@ -322,41 +317,6 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (error) {
       console.error("Erreur lors du chargement des images", error);
       return null;
-    }
-  }
-
-  function initMainBackground() {
-    function setBackgroundImage() {
-      bgDiv.style.backgroundImage = `url('${img.src}')`;
-      img.remove();
-    }
-
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            console.log("entry : " + entry);
-            if (entry.isIntersecting) {
-              if (img.complete) {
-                setBackgroundImage();
-              } else {
-                img.onload = setBackgroundImage;
-              }
-              observer.unobserve(bgDiv);
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-
-      observer.observe(bgDiv);
-    } else {
-      // Fallback pour les navigateurs qui ne supportent pas IntersectionObserver
-      if (img.complete) {
-        setBackgroundImage();
-      } else {
-        img.onload = setBackgroundImage;
-      }
     }
   }
 
