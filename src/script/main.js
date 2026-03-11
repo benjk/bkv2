@@ -27,14 +27,13 @@ function smoothScrollTo(targetY, duration = 550) {
   requestAnimationFrame(step);
 }
 
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (e) => {
-    const id = link.getAttribute("href");
-    const target = document.querySelector(id);
-    if (!target) return;
-    e.preventDefault();
-    smoothScrollTo(target.getBoundingClientRect().top + window.scrollY);
-  });
+document.addEventListener("click", (e) => {
+  const link = e.target.closest('a[href^="#"]');
+  if (!link) return;
+  const target = document.querySelector(link.getAttribute("href"));
+  if (!target) return;
+  e.preventDefault();
+  smoothScrollTo(target.getBoundingClientRect().top + window.scrollY);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
