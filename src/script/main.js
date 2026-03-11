@@ -1,5 +1,3 @@
-import gsap from "gsap";
-import ScrollToPlugin from "gsap/ScrollToPlugin";
 import Splide from "@splidejs/splide";
 import "@splidejs/splide/css";
 import projectsData from "../../public/projects-data.json";
@@ -14,11 +12,32 @@ import {
   disableAnimation,
 } from "./utils";
 
-// Si un plugin GSAP doit être enregistré :
-gsap.registerPlugin(ScrollToPlugin);
+function smoothScrollTo(targetY, duration = 550) {
+  const startY = window.scrollY;
+  const diff = targetY - startY;
+  if (diff === 0) return;
+  let startTime = null;
+  function ease(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+  function step(ts) {
+    if (!startTime) startTime = ts;
+    const p = Math.min((ts - startTime) / duration, 1);
+    window.scrollTo(0, startY + diff * ease(p));
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (e) => {
+    const id = link.getAttribute("href");
+    const target = document.querySelector(id);
+    if (!target) return;
+    e.preventDefault();
+    smoothScrollTo(target.getBoundingClientRect().top + window.scrollY);
+  });
+});
 
 document.addEventListener("DOMContentLoaded", function () {
-  const header = document.querySelector("header");
   const projectsContainer = document.querySelector(
     ".projects-container-global"
   );
@@ -27,19 +46,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const radiosCarousel = document.querySelectorAll(".radio-carousel");
   const phoneLink = document.getElementById("phone-info");
   const clientSlideTrack = document.querySelector(".client-slide-track");
-  const infoMsgProjects = document.querySelector("#third-section .info-msg");
+  const infoMsgProjects = document.querySelector("#portfolio-section .info-msg");
 
   const template = projectTemplate;
 
   let mainCarousels;
   let thumbCarouselImgContainer;
   let cards;
-  let contactLinks;
-  let projectsLinks;
-  let secondLinks;
-
   let activeCard;
-  let scrollingLinkAnimation = null;
 
   initProjects();
 
@@ -64,12 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Processus de chargement et de rendu des projets
       await processProjects(projectsData);
-
-      // Initialisation précoce des éléments statiques
-      projectsLinks = document.querySelectorAll(".projects-link");
-      secondLinks = document.querySelectorAll(".second-link");
-      contactLinks = document.querySelectorAll(".contact-link");
-      initScrollAnimation();
 
       // Fonction pour attendre le rendu complet
       function waitForDOMRender() {
@@ -318,78 +326,6 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Erreur lors du chargement des images", error);
       return null;
     }
-  }
-
-  function initScrollAnimation() {
-    contactLinks.forEach((link) => {
-      let duration = parseFloat(link.getAttribute("data-duration")) || 0.5;
-
-      link.addEventListener("click", () => {
-        let headerHeight = 0;
-        if (header) headerHeight = header.clientHeight;
-        scrollingLinkAnimation = gsap.to(window, {
-          duration: duration,
-          scrollTo: {
-            y: "#contact-section",
-            offsetY: headerHeight,
-          },
-          onComplete: () => {
-            setTimeout(() => {
-              scrollingLinkAnimation = null;
-            }, 50);
-          },
-        });
-      });
-    });
-
-    projectsLinks.forEach((link) => {
-      let duration = parseFloat(link.getAttribute("data-duration")) || 0.5;
-
-      link.addEventListener("click", () => {
-        let seuil = isSmallScreen()
-          ? "#third-section"
-          : ".projects-container-global";
-        let headerHeight = 0;
-        if (header) headerHeight = header.clientHeight;
-        scrollingLinkAnimation = gsap.to(window, {
-          duration: duration,
-          scrollTo: {
-            y: seuil,
-            offsetY: headerHeight,
-          },
-          onComplete: () => {
-            setTimeout(() => {
-              scrollingLinkAnimation = null;
-            }, 50);
-          },
-        });
-      });
-    });
-
-    secondLinks.forEach((link) => {
-      let duration = parseFloat(link.getAttribute("data-duration")) || 0.5;
-
-      link.addEventListener("click", () => {
-        let headerHeight = 0;
-        if (header) headerHeight = header.clientHeight;
-        gsap.to(window, {
-          duration: duration,
-          scrollTo: { y: "#second-section", offsetY: headerHeight },
-        });
-        scrollingLinkAnimation = gsap.to(window, {
-          duration: duration,
-          scrollTo: {
-            y: "#second-section",
-            offsetY: headerHeight,
-          },
-          onComplete: () => {
-            setTimeout(() => {
-              scrollingLinkAnimation = null;
-            }, 50);
-          },
-        });
-      });
-    });
   }
 
   function initSplide(data) {

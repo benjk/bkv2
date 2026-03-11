@@ -42,7 +42,7 @@ export function isPhone() {
 }
 
 export function checkCarouselOverflow(container) {
-    const tempElt = document.querySelector('#third-section h2');
+    const tempElt = document.querySelector('#portfolio-section h2');
     const marginM = parseFloat(getComputedStyle(tempElt).marginBottom);
     const parent = container.parentElement;
 

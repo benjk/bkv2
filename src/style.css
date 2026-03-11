@@ -219,7 +219,7 @@ main {
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
-  overflow: hidden;
+  overflow: clip;
   font-family: var(--font-family2);
   gap: var(--margin-xl);
   padding-bottom: var(--margin-xl);
@@ -998,7 +998,7 @@ textarea.floating-input {
 }
 
 /****************** SPLIDE ******************/
-#third-section {
+#portfolio-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1006,11 +1006,11 @@ textarea.floating-input {
   padding-top: var(--margin-l);
 }
 
-#third-section + h2 {
+#portfolio-section + h2 {
   margin-top: var(--margin-l);
 }
 
-#third-section .info-msg {
+#portfolio-section .info-msg {
   font-size: calc(var(--title4-font-size) * 0.7);
   font-family: var(--font-family1);
   margin-bottom: var(--margin-s);
@@ -1020,8 +1020,8 @@ textarea.floating-input {
   cursor: pointer;
 }
 
-#third-section .info-msg:after,
-#third-section .info-msg:before {
+#portfolio-section .info-msg:after,
+#portfolio-section .info-msg:before {
   content: "*";
   color: var(--color2);
 }
@@ -1664,7 +1664,7 @@ input[type="radio"] {
     min-height: calc(var(--car-arrow-mobile-size) * 1.5);
   }
 
-  #third-section h2 {
+  #portfolio-section h2 {
     margin-top: 0;
     margin-bottom: var(--margin-m);
   }
